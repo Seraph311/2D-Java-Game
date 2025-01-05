@@ -1,5 +1,7 @@
 package main;
 
+import entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16; // 16 x 16 tile size
     final int scale = 3;
 
-    final int tileSize = originalTileSize * scale; // Scaled up of orginalTileSile. 16 x 3 = 48 thus 48 x 48
+    public final int tileSize = originalTileSize * scale; // Scaled up of orginalTileSile. 16 x 3 = 48 thus 48 x 48
     final int maxScreenCol = 16;
     final int maxScreenRow = 12;
     final int screenWidth = maxScreenCol * tileSize; // Screen width. 768 pixels
@@ -18,6 +20,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread; // Updates the frame every second so the game keeps running
+
+    Player player = new Player(this, keyHandler);
 
     // Set player's default position
     int playerX = 100;
@@ -138,31 +142,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 
-
     public void update() {
 
-        // Make the character run if shift is pressed
-        if(keyHandler.shiftPressed){
-            playerSpeed = 8;
-        }
-        else{
-            playerSpeed = 4;
-        }
-
-        // Make the character move if W, A, S, and D is pressed
-        if(keyHandler.upPressed) {
-            playerY -= playerSpeed;
-        }
-        else if(keyHandler.downPressed) {
-            playerY += playerSpeed;
-        }
-        // Separate if statement so the character can move diagonally
-        if(keyHandler.leftPressed) {
-            playerX -= playerSpeed;
-        }
-        else if(keyHandler.rightPressed) {
-            playerX += playerSpeed;
-        }
+        player.update();
 
     }
 
@@ -172,10 +154,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2D = (Graphics2D) graphics;
 
-        // Temp player character
-        g2D.setColor(Color.WHITE);
-        g2D.fillRect(playerX, playerY, tileSize, tileSize);
-
+        player.draw(graphics);
 
         // Closes the window without terminating to release resources and hide the frame
         g2D.dispose();

@@ -2,10 +2,15 @@ package main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashSet;
+import java.util.Set;
 
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed;
+    public Set<Integer> pressedKeys = new HashSet<>();
+    boolean keyPressed = false;
+
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -14,6 +19,8 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+        pressedKeys.add(e.getKeyCode());
 
         int code = e.getKeyCode(); // Returns the integer keyCode associated with the key in this event
 
@@ -43,6 +50,8 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+        pressedKeys.remove(e.getKeyCode());
+
         int code = e.getKeyCode();
 
         // Check if keys are released
@@ -67,4 +76,16 @@ public class KeyHandler implements KeyListener {
         }
 
     }
+
+    public boolean checkIfKeyPressed() {
+
+        if (pressedKeys.isEmpty()) {
+            return keyPressed = false;
+        }
+        else {
+            return keyPressed = true;
+        }
+
+    }
+
 }
