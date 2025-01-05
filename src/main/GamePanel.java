@@ -141,6 +141,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
+        // Make the character run if shift is pressed
         if(keyHandler.shiftPressed){
             playerSpeed = 8;
         }
@@ -148,13 +149,14 @@ public class GamePanel extends JPanel implements Runnable {
             playerSpeed = 4;
         }
 
+        // Make the character move if W, A, S, and D is pressed
         if(keyHandler.upPressed) {
             playerY -= playerSpeed;
         }
         else if(keyHandler.downPressed) {
             playerY += playerSpeed;
         }
-
+        // Separate if statement so the character can move diagonally
         if(keyHandler.leftPressed) {
             playerX -= playerSpeed;
         }
