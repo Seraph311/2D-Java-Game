@@ -153,74 +153,23 @@ public class Player extends Entity {
 
        BufferedImage image = null;
 
+       Image[] leftWalkingSprites = {left1, left2, left3, left4, left5, left6, left7, left8};
+       Image[] rightWalkingSprites = {right1, right2, right3, right4, right5, right6, right7, right8};
+       Image[] leftIdleSprites = {idleLeft1, idleLeft2};
+       Image[] rightIdleSprites = {idleRight1, idleRight2};
+
        switch (direction){
            case "left":
-               if (spriteNum == 1) {
-                   image = left1;
-               }
-               if (spriteNum == 2) {
-                   image = left2;
-               }
-               if (spriteNum == 3) {
-                   image = left3;
-               }
-               if (spriteNum == 4) {
-                   image = left4;
-               }
-               if (spriteNum == 5) {
-                   image = left5;
-               }
-               if (spriteNum == 6) {
-                   image = left6;
-               }
-               if (spriteNum == 7) {
-                   image = left7;
-               }
-               if (spriteNum == 8) {
-                   image = left8;
-               }
+               image = (BufferedImage) leftWalkingSprites[spriteNum - 1];
                break;
            case "right":
-               if (spriteNum == 1) {
-                   image = right1;
-               }
-               if (spriteNum == 2) {
-                   image = right2;
-               }
-               if (spriteNum == 3) {
-                   image = right3;
-               }
-               if (spriteNum == 4) {
-                   image = right4;
-               }
-               if (spriteNum == 5) {
-                   image = right5;
-               }
-               if (spriteNum == 6) {
-                   image = right6;
-               }
-               if (spriteNum == 7) {
-                   image = right7;
-               }
-               if (spriteNum == 8) {
-                   image = right8;
-               }
+               image = (BufferedImage) rightWalkingSprites[spriteNum - 1];
                break;
            case "idle_left":
-               if(spriteNum2Sprites == 1){
-                   image = idleLeft1;
-               }
-               if(spriteNum2Sprites == 2){
-                   image = idleLeft2;
-               }
+               image = (BufferedImage) leftIdleSprites[spriteNum2Sprites - 1];
                break;
            case "idle_right":
-               if (spriteNum2Sprites == 1){
-                   image = idleRight1;
-               }
-               if(spriteNum2Sprites == 2){
-                   image = idleRight2;
-               }
+               image = (BufferedImage) rightIdleSprites[spriteNum2Sprites - 1];
                break;
 
        }
