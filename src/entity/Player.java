@@ -32,41 +32,32 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-
         try {
+            // Load idle sprites
+            idleLeft = loadSpriteArray("/player/idle_left_",2);
+            idleRight = loadSpriteArray("/player/idle_right_",2);
 
-            // Idle sprite
-            // Left
-            idleLeft1 = ImageIO.read(getClass().getResourceAsStream("/player/idle_left_1.png"));
-            idleLeft2 = ImageIO.read(getClass().getResourceAsStream("/player/idle_left_2.png"));
-            // Right
-            idleRight1 = ImageIO.read(getClass().getResourceAsStream("/player/idle_right_1.png"));
-            idleRight2 = ImageIO.read(getClass().getResourceAsStream("/player/idle_right_2.png"));
+            // Load walk sprites
+            leftSprites = loadSpriteArray("/player/walk_left_", 8);
+            rightSprites = loadSpriteArray("/player/walk_right_", 8);
 
-            // Walk sprite
-            // Left
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/walk_left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/walk_left_2.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("/player/walk_left_3.png"));
-            left4 = ImageIO.read(getClass().getResourceAsStream("/player/walk_left_4.png"));
-            left5 = ImageIO.read(getClass().getResourceAsStream("/player/walk_left_5.png"));
-            left6 = ImageIO.read(getClass().getResourceAsStream("/player/walk_left_6.png"));
-            left7 = ImageIO.read(getClass().getResourceAsStream("/player/walk_left_7.png"));
-            left8 = ImageIO.read(getClass().getResourceAsStream("/player/walk_left_8.png"));
-            // Right
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/walk_right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/walk_right_2.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/player/walk_right_3.png"));
-            right4 = ImageIO.read(getClass().getResourceAsStream("/player/walk_right_4.png"));
-            right5 = ImageIO.read(getClass().getResourceAsStream("/player/walk_right_5.png"));
-            right6 = ImageIO.read(getClass().getResourceAsStream("/player/walk_right_6.png"));
-            right7 = ImageIO.read(getClass().getResourceAsStream("/player/walk_right_7.png"));
-            right8 = ImageIO.read(getClass().getResourceAsStream("/player/walk_right_8.png"));
-
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Helper method to load a single sprite
+    private BufferedImage loadSprite(String path) throws IOException {
+        return ImageIO.read(getClass().getResourceAsStream(path));
+    }
+
+    // Helper method to load an array of sprites
+    private BufferedImage[] loadSpriteArray(String basePath, int count) throws IOException {
+        BufferedImage[] sprites = new BufferedImage[count];
+        for (int i = 0; i < count; i++) {
+            sprites[i] = loadSprite(basePath + (i + 1) + ".png");
+        }
+        return sprites;
     }
 
 
@@ -89,6 +80,7 @@ public class Player extends Entity {
             else if(direction.equals("idle_left")){
                 direction = "left";
             }
+
             y -= speed;
         }
         else if(keyHandler.downPressed) {
@@ -99,6 +91,7 @@ public class Player extends Entity {
             else if(direction.equals("idle_left")){
                 direction = "left";
             }
+
             y += speed;
         }
         // Separate if statement so the character can move diagonally
@@ -153,23 +146,18 @@ public class Player extends Entity {
 
        BufferedImage image = null;
 
-       Image[] leftWalkingSprites = {left1, left2, left3, left4, left5, left6, left7, left8};
-       Image[] rightWalkingSprites = {right1, right2, right3, right4, right5, right6, right7, right8};
-       Image[] leftIdleSprites = {idleLeft1, idleLeft2};
-       Image[] rightIdleSprites = {idleRight1, idleRight2};
-
        switch (direction){
            case "left":
-               image = (BufferedImage) leftWalkingSprites[spriteNum - 1];
+               image =  leftSprites[spriteNum - 1];
                break;
            case "right":
-               image = (BufferedImage) rightWalkingSprites[spriteNum - 1];
+               image =  rightSprites[spriteNum - 1];
                break;
            case "idle_left":
-               image = (BufferedImage) leftIdleSprites[spriteNum2Sprites - 1];
+               image = idleLeft[spriteNum2Sprites - 1];
                break;
            case "idle_right":
-               image = (BufferedImage) rightIdleSprites[spriteNum2Sprites - 1];
+               image = idleRight[spriteNum2Sprites - 1];
                break;
 
        }

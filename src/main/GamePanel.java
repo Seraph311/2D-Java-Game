@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     Player player = new Player(this, keyHandler);
 
-    // Set player's default position
+    // Temporarily set player's default position
     int playerX = 100;
     int playerY = 100;
     int playerSpeed = 4;
@@ -100,7 +100,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        double drawInterval = 1000000000 / FPS;
+        double drawInterval = 1000000000 / FPS; // 0.01666 seconds
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -111,7 +111,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         while(gameThread != null) {
 
-            currentTime =System.nanoTime();
+            currentTime = System.nanoTime();
 
             delta += (currentTime - lastTime) / drawInterval;
             timer += currentTime - lastTime; // For displaying FPS
@@ -148,6 +148,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    @Override
     public void paintComponent(Graphics graphics) {
 
         super.paintComponent(graphics);
