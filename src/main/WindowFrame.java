@@ -8,6 +8,9 @@ public class WindowFrame extends JFrame {
 
         GamePanel gamePanel = new GamePanel();
 
+        // Update the screen with new information
+        gamePanel.startGameThread();
+
         // Frame
         this.setTitle("The Game");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
