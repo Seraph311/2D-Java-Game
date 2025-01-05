@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -113,6 +114,7 @@ public class Player extends Entity {
             }
         }
 
+        // Every 5th frame will update the animation.
         spriteCounter++;
         if(spriteCounter > 5) {
             if(spriteNum < 8){
@@ -124,7 +126,7 @@ public class Player extends Entity {
             spriteCounter = 0;
         }
 
-        // Every 12th frame it will update the animation. This is to make the animation slower since it only has 2 sprites
+        // Every 12th frame, it will update the animation. This is to make the animation slower since it only has 2 sprites
         spriteCounter2Sprites++;
         if(spriteCounter2Sprites > 12){
             if(spriteNum2Sprites == 1){
@@ -147,6 +149,7 @@ public class Player extends Entity {
        BufferedImage image = null;
 
        switch (direction){
+
            case "left":
                image =  leftSprites[spriteNum - 1];
                break;
