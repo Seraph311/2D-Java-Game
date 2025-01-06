@@ -4,11 +4,12 @@ import main.GamePanel;
 import main.KeyHandler;
 
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 
 public class Player extends Entity {
+
+    EntityImage entityImage = new EntityImage();
 
     GamePanel gamePanel;
     KeyHandler keyHandler;
@@ -34,39 +35,28 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
         try {
+
             // Load idle sprites
-            idleLeft = loadSpriteArray("/player/idle_left_",2);
-            idleRight = loadSpriteArray("/player/idle_right_",2);
+            idleLeft = entityImage.loadSpriteArray("/player/idle_left_",2);
+            idleRight = entityImage.loadSpriteArray("/player/idle_right_",2);
 
             // Load walk sprites
-            leftSprites = loadSpriteArray("/player/walk_left_", 8);
-            rightSprites = loadSpriteArray("/player/walk_right_", 8);
+            leftSprites = entityImage.loadSpriteArray("/player/walk_left_", 8);
+            rightSprites = entityImage.loadSpriteArray("/player/walk_right_", 8);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Helper method to load a single sprite
-    private BufferedImage loadSprite(String path) throws IOException {
-        return ImageIO.read(getClass().getResourceAsStream(path));
-    }
-
-    // Helper method to load an array of sprites
-    private BufferedImage[] loadSpriteArray(String basePath, int count) throws IOException {
-        BufferedImage[] sprites = new BufferedImage[count];
-        for (int i = 0; i < count; i++) {
-            sprites[i] = loadSprite(basePath + (i + 1) + ".png");
-        }
-        return sprites;
-    }
-
 
     public void update() {
 
         // Make the character run if shift is pressed
+        // *Bug: When w, a, s, d, keys are released while holding down shift, the character will not transition to idle animation*
+        // Fixed ^ .
         if(keyHandler.shiftPressed){
-            speed = 8;
+            speed = 6;
         }
         else{
             speed = 4;
@@ -105,7 +95,8 @@ public class Player extends Entity {
             x += speed;
         }
 
-        if(!keyHandler.checkIfKeyPressed()){
+        // Check if there's no key being pressed to switch walking animation to idle
+        if(!keyHandler.upPressed && !keyHandler.downPressed && !keyHandler.leftPressed && !keyHandler.rightPressed){
             if(direction.equals("left")){
                 direction = "idle_left";
             }
