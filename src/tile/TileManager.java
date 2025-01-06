@@ -58,14 +58,20 @@ public class TileManager {
 
             while(col < gamePanel.maxScreenCol && row < gamePanel.maxScreenRow){
 
+                // This will put read text file into string
                 String line = bufferedReader.readLine();
+                // Test String line
+                // System.out.println(line);
 
                 while(col < gamePanel.maxScreenCol){
 
+                    // Splits the numbers with space
                     String numbers[] = line.split(" ");
 
+                    // Converts the elements inside the numbers[] array string into integer
                     int num = Integer.parseInt(numbers[col]);
 
+                    // Put the converted integer into the mapTileNum[][] 2D array. Basically, this will look like the MapData.txt but, instead of String, it's 2D array, so every numbers inside MapData.txt can be read and access the same way it was arranged.
                     mapTileNum[col][row] = num;
                     col++;
                 }
@@ -101,7 +107,8 @@ public class TileManager {
             int tileNum = mapTileNum[col][row];
 
             graphics2D.drawImage(tiles[0].image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
-            graphics2D.drawImage(tiles[tileNum].image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+            // Since the grass plant is foreground, the size is 16 x 16 instead of 48 x 48
+            graphics2D.drawImage(tiles[tileNum].image, x, y, 16, 16, null);
 
             col++;
             x += gamePanel.tileSize;
