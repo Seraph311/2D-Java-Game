@@ -6,7 +6,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Arrays;
 
 public class TileManager {
 
@@ -51,26 +50,67 @@ public class TileManager {
             // tileMap2DArray[0][x] is first_grass_1, 2 3, 4... 9.png
             transferTile("/tiles/summer_tiles/ground_grass_tiles/first_grass_", 9, 0);
 
-            // tileMap2DArray[1][x] second_grass_
+            // tileMap2DArray[1][x] is second_grass_
             transferTile("/tiles/summer_tiles/ground_grass_tiles/second_grass_", 4, 1);
 
-            // tileMap2DArray[2][x] cliff_grass_
+            // tileMap2DArray[2][x] is cliff_grass_
             transferTile("/tiles/summer_tiles/ground_grass_tiles/cliff_grass_", 4, 2);
 
-            // tileMap2DArray[3][x] cliff2_grass_
+            // tileMap2DArray[3][x] is cliff2_grass_
             transferTile("/tiles/summer_tiles/ground_grass_tiles/cliff2_grass_", 8, 3);
 
-            // tileMap2DArray[4][x] water1_grass_
+            // tileMap2DArray[4][x] is water1_grass_
             // this one have animation will fix it later
             transferTile("/tiles/summer_tiles/ground_grass_tiles/water1_grass_", 4, 4);
 
-            // tileMap2DArray[5][x] water2_grass_
+            // tileMap2DArray[5][x] is water2_grass_
             // this one have animation will fix it later
             transferTile("/tiles/summer_tiles/ground_grass_tiles/water2_grass_", 8, 5);
 
             // ------------------------- END ground_grass_tiles -------------------------
 
             // ------------------------- START dirt_tiles -------------------------
+            // TileMap2DArray[6 to 11][x] or col 6 - 11
+
+            // tileMap2DArray[6][x] is dirt_
+            transferTile("/tiles/summer_tiles/dirt_tiles/dirt_", 12, 6);
+
+            // tileMap2DArray[7][x] is dirt1_
+            transferTile("/tiles/summer_tiles/dirt_tiles/dirt1_", 3, 7);
+
+            // tileMap2DArray[8][x] is dirt2_
+            transferTile("/tiles/summer_tiles/dirt_tiles/dirt2_", 1, 8);
+
+            // tileMap2DArray[9][x] is dirt3_
+            transferTile("/tiles/summer_tiles/dirt_tiles/dirt3_", 4, 9);
+
+            // tileMap2DArray[10][x] is dirt4_
+            transferTile("/tiles/summer_tiles/dirt_tiles/dirt4_", 3, 10);
+
+            // tileMap2DArray[11][x] is dirt5_
+            transferTile("/tiles/summer_tiles/dirt_tiles/dirt5_", 9, 11);
+
+            // ------------------------- END dirt_tiles -------------------------
+
+            // ------------------------- START bush_tiles -------------------------
+            // TileMap2DArray[12 to 13][x] or col [12 -13]
+
+            // tileMap2DArray[12][x] is bush_
+            // this one have animation will fix it later
+            transferTile("/tiles/summer_tiles/bush_tiles/bush_", 12, 12);
+
+            // tileMap2DArray[13][x] is bush2_
+            // this one have animation will fix it later
+            transferTile("/tiles/summer_tiles/bush_tiles/bush2_", 11, 13);
+
+            // ------------------------- END dirt_tiles -------------------------
+
+            // ------------------------- START water_tiles -------------------------
+
+            // tileMap2DArray[14][x] is water_
+            transferTile("/tiles/summer_tiles/water_tiles/water_", 1, 14);
+
+            // ------------------------- END water_tiles -------------------------
 
 
         }catch(IOException e){
@@ -92,7 +132,7 @@ public class TileManager {
 
     }
 
-    public BufferedImage[] transferTile(String path,int count ,int col) throws IOException{
+    public void transferTile(String path, int count , int col) throws IOException{
 
         BufferedImage[] tileImages = loadTileArray(path, count);
         for (int i = 0; i < tileImages.length; i++) {
@@ -101,8 +141,6 @@ public class TileManager {
             tileMap2DArray[col][i].image = tileImages[i];
 
         }
-
-        return tileImages;
 
     }
 
@@ -185,9 +223,12 @@ public class TileManager {
             int tileNumerator = mapTileNumerator[col][row];
             int tileDenominator = mapTileDenominator[col][row];
 
+            // below is for background
             graphics2D.drawImage(tileMap2DArray[0][4].image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
-            // Since the grass plant is foreground, the size is 16 x 16 instead of 48 x 48
-            graphics2D.drawImage(tileMap2DArray[tileNumerator][tileDenominator].image, x, y, 16, 16, null);
+
+            graphics2D.drawImage(tileMap2DArray[tileNumerator][tileDenominator].image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+
+            // below is for foreground
 
             col++;
             x += gamePanel.tileSize;
