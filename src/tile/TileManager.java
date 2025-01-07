@@ -5,17 +5,16 @@ import main.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.Arrays;
 
 public class TileManager {
 
     GamePanel gamePanel;
     Tile[] tiles;
-    int[][] mapTileNum;
     Tile[][] tileMap2DArray;
+    int[][] mapTileNumerator;
+    int[][] mapTileDenominator;
 
     public TileManager(GamePanel gamePanel){
 
@@ -23,7 +22,8 @@ public class TileManager {
 
         tiles = new Tile[10];
         tileMap2DArray = new Tile[50][50];
-        mapTileNum = new int[gamePanel.maxScreenCol][gamePanel.maxScreenRow];
+        mapTileNumerator = new int[gamePanel.maxScreenCol][gamePanel.maxScreenRow];
+        mapTileDenominator = new int[gamePanel.maxScreenCol][gamePanel.maxScreenRow];
 
         getTileImage();
         loadMap();
@@ -104,12 +104,25 @@ public class TileManager {
                     // Splits the numbers with space
                     String[] numbers = line.split(" ");
 
+                    String[] numeratorString = new String[line.length()];
+                    String[] denominatorString = new String[line.length()];
+
+                    for(int i = 0; i < numbers.length; i++){
+
+                        String[] fraction = numbers[i].split("/");
+                        numeratorString[i] = fraction[0];
+                        denominatorString[i] = fraction[1];
+
+                    }
+
                     // Converts the elements inside the numbers[] array string into integer
-                    int num = Integer.parseInt(numbers[col]);
+                    int numeratorInt = Integer.parseInt(numeratorString[col]);
+                    int denominatorInt = Integer.parseInt(denominatorString[col]);
+
 
                     // Put the converted integer into mapTileNum[][] 2D array. Basically, this will look like the MapData.txt but, instead of String, it's 2D array, so every numbers inside MapData.txt can be read and access the same way it was arranged.
-                    mapTileNum[col][row] = num;
-
+                    mapTileNumerator[col][row] = numeratorInt;
+                    mapTileDenominator[col][row] = denominatorInt;
 
 
                     col++;
@@ -143,11 +156,12 @@ public class TileManager {
 
         while(col < gamePanel.maxScreenCol && row < gamePanel.maxScreenRow){
 
-            int tileNum = mapTileNum[col][row];
+            int tileNumerator = mapTileNumerator[col][row];
+            int tileDenominator = mapTileDenominator[col][row];
 
             graphics2D.drawImage(tileMap2DArray[0][4].image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
             // Since the grass plant is foreground, the size is 16 x 16 instead of 48 x 48
-            graphics2D.drawImage(tiles[tileNum].image, x, y, 16, 16, null);
+            graphics2D.drawImage(tileMap2DArray[tileNumerator][tileDenominator].image, x, y, 16, 16, null);
 
             col++;
             x += gamePanel.tileSize;
